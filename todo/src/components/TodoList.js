@@ -1,6 +1,8 @@
 import React from 'react'
 import { connect } from 'react-redux';
-import { addTask } from '../actions'
+import { addTask, toggleTask } from '../actions'
+
+import './TodoList.css'
 
 class TodoList extends React.Component {
     state = {
@@ -21,13 +23,19 @@ class TodoList extends React.Component {
         })
     }
 
+    toggleTask = id => {
+        this.props.toggleTask(id)
+    }
+
     render() {
-        console.log(this.props)
+        console.log(this.props.tasks)
         return (
             <div>
                 <h1>Tasks</h1>
                 {this.props.tasks.map(task => (
-                    <div><h3 key={task.id}>{task.name}</h3></div>
+                    <div className={`${task.completed ? `strike` : ``}`}
+                        onClick={() => this.toggleTask(task.id)}
+                        key={task.id}><h3>{task.name}</h3></div>
                 ))}
                 <form onSubmit={this.addTask}>
                     <input
@@ -49,4 +57,4 @@ const mapStateToProps = state => {
     }
 }
 
-export default connect(mapStateToProps, { addTask })(TodoList)
+export default connect(mapStateToProps, { addTask, toggleTask })(TodoList)

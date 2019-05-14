@@ -8,3 +8,10 @@ export const addTask = task => ({
     id: taskId++,
     task
 })
+
+export const toggleTask = id => {
+    return {
+        type: TOGGLE_TASK,
+        payload: id
+    }
+}
