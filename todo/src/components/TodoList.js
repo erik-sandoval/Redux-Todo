@@ -3,25 +3,40 @@ import { connect } from 'react-redux';
 import { addTask } from '../actions'
 
 class TodoList extends React.Component {
-    addTask = e => {
-        e.preventDefault();
+    state = {
+        task: ''
     }
 
     handleChange = e => {
-        
+        this.setState({
+            task: e.target.value
+        })
+    }
+
+    addTask = e => {
+        e.preventDefault();
+        this.props.addTask(this.state.task)
+        this.setState({
+            task: ''
+        })
     }
 
     render() {
-        console.log(this.props.items.text)
+        console.log(this.props)
         return (
             <div>
                 <h1>Tasks</h1>
-                
-                <input 
-                onChange={this.handleChange}
-                value={this.props.items.text}
-                ></input>
-                <button onClick={this.addTask}>add task</button>
+                {this.props.tasks.map(task => (
+                    <div><h3 key={task.id}>{task.name}</h3></div>
+                ))}
+                <form onSubmit={this.addTask}>
+                    <input
+                        name='task'
+                        onChange={this.handleChange}
+                        value={this.state.task}
+                    ></input>
+                    <button >add task</button>
+                </form>
             </div>
         )
     }
@@ -29,10 +44,8 @@ class TodoList extends React.Component {
 
 
 const mapStateToProps = state => {
-    console.log(state)
     return {
-        items: state.items
-        
+        tasks: state.tasks
     }
 }
 

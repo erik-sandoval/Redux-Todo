@@ -1,11 +1,7 @@
 import { ADD_TASK } from '../actions'
 
 const initialState = {
-    items: {
-        text: '',
-        id: '',
-        completed: false
-    }
+    tasks: []
 }
 
 export default (state = initialState, action) => {
@@ -13,12 +9,12 @@ export default (state = initialState, action) => {
         case ADD_TASK:
             return {
                 ...state,
-                items: {
-                    id: action.id,
-                    text: action.task,
-                    completed: false
-                }
+                tasks: [
+                    ...state.tasks,
+                    { name: action.task, id: action.id, completed: false }
+                ]
             }
+
         default:
             return state
     }
