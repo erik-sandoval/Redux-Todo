@@ -1,4 +1,4 @@
-import { ADD_TASK, TOGGLE_TASK } from '../actions'
+import { ADD_TASK, TOGGLE_TASK, RM_COMPLETED } from '../actions'
 
 const initialState = {
     tasks: []
@@ -26,6 +26,11 @@ export default (state = initialState, action) => {
                     }
                     return task
                 })
+            }
+        case RM_COMPLETED:
+            return {
+                ...state,
+                tasks: state.tasks.filter(task => task.completed === false)
             }
         default:
             return state
